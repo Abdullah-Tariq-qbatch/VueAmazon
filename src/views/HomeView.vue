@@ -1,6 +1,7 @@
-<script setup>
-</script>
+<script setup></script>
 
 <template>
- <div>Hello</div>
+  <div class="bg-[#F4F4F8] w-full h-full">
+    Helloadsdsadasdadajdhjksahjashjdsjsjhjshdjshjhjksjsahdjhasjshjdhjahdjahjdhjs
+  </div>
 </template>
