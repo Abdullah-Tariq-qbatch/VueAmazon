@@ -5,7 +5,7 @@
       <img :src="product.image" alt="" class="w-[220px] h-[125px] object-scale-down mb-[16px]" />
       <div class="border-t border-[#EEEBEB]">
         <router-link
-          to="/"
+          :to="`/products/${product.id}`"
           class="text-[#031625] text-[14px] font-[500] mt-[16px] hover:text-[#27C498]"
           >{{ product.name }}</router-link
         >

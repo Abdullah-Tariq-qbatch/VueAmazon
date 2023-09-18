@@ -10,18 +10,19 @@
           <h1 class="text-xl font-bold leading-tight tracking-tight text-gray-900 md:text-2xl">
             Sign in to your account
           </h1>
-          <form class="space-y-4 md:space-y-6" action="#">
+          <div class="space-y-4 md:space-y-6">
             <div>
               <label for="email" class="block mb-2 text-sm font-medium text-gray-900"
                 >Your email</label
               >
               <input
-                type="email"
+                type="text"
                 name="email"
                 id="email"
                 class="bg-gray-50 border border-gray-300 text-gray-900 sm:text-sm rounded-lg focus:ring-[#27C498] focus:border-[#27C498] focus:outline-none focus:ring-0 block w-full p-2.5"
                 placeholder="name@gmail.com"
                 required=""
+                v-model="username"
               />
             </div>
             <div>
@@ -35,14 +36,15 @@
                 placeholder="••••••••"
                 class="bg-gray-50 border border-gray-300 text-gray-900 sm:text-sm rounded-lg focus:ring-[#27C498] focus:border-[#27C498] focus:outline-none focus:ring-0 block w-full p-2.5"
                 required=""
+                v-model="password"
               />
             </div>
-            <ButtonView role="primary" styles="w-full"> Sign in </ButtonView>
+            <ButtonView role="primary" styles="w-full" @click="submit"> Sign in </ButtonView>
             <p class="text-sm font-light text-gray-500 dark:text-gray-400">
               Don’t have an account yet?
               <a href="#" class="font-medium text-[#27C498] hover:underline">Sign up</a>
             </p>
-          </form>
+          </div>
         </div>
       </div>
     </div>
@@ -51,6 +53,16 @@
 
 <script setup>
 import ButtonView from '../components/inputs/Button/ButtonView.vue'
+import { ref } from 'vue'
+import { useAuthStore } from '../stores/authStore'
+
+const authStore = useAuthStore()
+const username = ref('')
+const password = ref('')
+
+const submit = () => {
+  authStore.login(username.value, password.value)
+}
 </script>
 
 <style></style>

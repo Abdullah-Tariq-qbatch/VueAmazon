@@ -21,7 +21,6 @@ const authStore = useAuthStore();
 
 router.beforeEach((to, from, next) => {
   if (to.matched.some((record) => record.meta.requiresAuth)) {
-    console.log(authStore.isAuthenticated());
     if (authStore.isAuthenticated()) {
       next()
     } else {

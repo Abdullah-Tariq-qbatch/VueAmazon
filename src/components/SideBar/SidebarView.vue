@@ -11,9 +11,9 @@
       </router-link>
       <br />
       <router-link
-        to="/product-listings"
+        to="/products"
         :class="`text-[14px]  ${
-          $route.name === 'productListing' ? 'text-[#27C498]' : 'text-[#ADB4D2]'
+          $route.name === 'products' ? 'text-[#27C498]' : 'text-[#ADB4D2]'
         }`"
       >
         <div class="flex items-center">
