@@ -1,18 +1,23 @@
 <script setup>
-import { RouterView } from 'vue-router'
+import { RouterView, useRoute } from 'vue-router'
 import Header from '../components/Header/HeaderView.vue'
 import SidebarView from '../components/SideBar/SidebarView.vue'
+import FooterView from '../components/Footer/FooterView.vue'
+const route = useRoute()
 </script>
 
 <template>
-  <Header />
-  <div class="flex">
-    <SidebarView />
-
-    <div class="w-full min-h-screen">
-      <RouterView />
+  <div v-if="route.path !== '/login'">
+    <Header />
+    <div class="flex">
+      <SidebarView />
+      <div class="min-h-screen flex-grow">
+        <RouterView />
+        <FooterView />
+      </div>
     </div>
   </div>
+  <div v-else><RouterView /></div>
 </template>
 
 <style scoped></style>
