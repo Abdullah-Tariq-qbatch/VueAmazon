@@ -22,8 +22,11 @@
                 class="bg-gray-50 border border-gray-300 text-gray-900 sm:text-sm rounded-lg focus:ring-[#27C498] focus:border-[#27C498] focus:outline-none focus:ring-0 block w-full p-2.5"
                 placeholder="name@gmail.com"
                 required=""
-                v-model="username"
+                v-model="email"
               />
+              <p v-show="emailError" class="block my-2 text-sm font-medium text-red-500">
+                Email is required
+              </p>
             </div>
             <div>
               <label for="password" class="block mb-2 text-sm font-medium text-gray-900"
@@ -38,11 +41,19 @@
                 required=""
                 v-model="password"
               />
+              <p v-show="passwordError" class="block my-2 text-sm font-medium text-red-500">
+                Password is required
+              </p>
             </div>
-            <ButtonView role="primary" styles="w-full" @click="submit"> Sign in </ButtonView>
+            <ButtonView role="primary" styles="w-full" @click="submit">
+              <span v-if="!authStore.loading">Sign in</span>
+              <div v-else role="status">
+                <IconSpinner />
+              </div>
+            </ButtonView>
             <p class="text-sm font-light text-gray-500 dark:text-gray-400">
-              Don’t have an account yet?
-              <a href="#" class="font-medium text-[#27C498] hover:underline">Sign up</a>
+              Don't have an account yet?
+              <a class="font-medium text-[#27C498] hover:underline">Sign up</a>
             </p>
           </div>
         </div>
@@ -53,15 +64,23 @@
 
 <script setup>
 import ButtonView from '../components/inputs/Button/ButtonView.vue'
+import IconSpinner from '../components/icons/IconSpinner.vue'
 import { ref } from 'vue'
 import { useAuthStore } from '../stores/authStore'
 
 const authStore = useAuthStore()
-const username = ref('')
+const email = ref('')
 const password = ref('')
 
+const emailError = ref(false)
+const passwordError = ref(false)
+
 const submit = () => {
-  authStore.login(username.value, password.value)
+  if (email.value === '') emailError.value = true
+  else emailError.value = false
+  if (password.value === '') passwordError.value = true
+  else passwordError.value = false
+  if (!emailError.value && !passwordError.value) authStore.login(email.value, password.value)
 }
 </script>
 

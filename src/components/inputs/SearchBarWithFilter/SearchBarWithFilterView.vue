@@ -30,12 +30,14 @@
     value="filterValue"
     :onClose="setFilterModalCLose"
     :option-click="optionClick"
+    v-on-click-outside="setFilterModalCLose"
   />
 </template>
 
 <script setup>
 import { ref } from 'vue'
 import FilterModal from '../../Dialog/FilterModal.vue'
+import { vOnClickOutside } from '@vueuse/components'
 
 const isFilterModalOpen = ref(false)
 

@@ -18,7 +18,29 @@ const dummyProducts = [
     },
     category: "Men's T-Shirts",
     rank: '3',
-    TotalItems: '100'
+    TotalItems: '100',
+    variations: ['B0BSXS7NDG', 'C0VSXS7NDG', 'L0ACVK7NDG', 'P0BSXS7NDG', 'G1VSXS7NDG', 'J0BSXS7NDG'],
+    attributeVariations: [
+      {
+        color: 'Red',
+        size: 'Small'
+      },
+      {
+        color: 'Black',
+        size: 'Medium'
+      },
+      {
+        color: 'Grey',
+        size: 'Large'
+      }
+    ],
+    dimensions: {
+      length: '23',
+      width: '23',
+      height: '23'
+    },
+    weight: '0.60',
+    opppertunityScore: '4'
   },
   {
     id: 2,
@@ -39,7 +61,29 @@ const dummyProducts = [
     },
     category: "Men's T-Shirts",
     rank: '3',
-    TotalItems: '100'
+    TotalItems: '100',
+    variations: ['B0BSXS7NDG', 'C0VSXS7NDG', 'L0ACVK7NDG', 'P0BSXS7NDG', 'G1VSXS7NDG', 'J0BSXS7NDG'],
+    attributeVariations: [
+      {
+        color: 'Red',
+        size: 'Small'
+      },
+      {
+        color: 'Black',
+        size: 'Medium'
+      },
+      {
+        color: 'Grey',
+        size: 'Large'
+      }
+    ],
+    dimensions: {
+      length: '23',
+      width: '23',
+      height: '23'
+    },
+    weight: '0.60',
+    opppertunityScore: '4'
   },
   {
     id: 3,
@@ -60,7 +104,29 @@ const dummyProducts = [
     },
     category: "Men's T-Shirts",
     rank: '3',
-    TotalItems: '100'
+    TotalItems: '100',
+    variations: ['B0BSXS7NDG', 'C0VSXS7NDG', 'L0ACVK7NDG', 'P0BSXS7NDG', 'G1VSXS7NDG', 'J0BSXS7NDG'],
+    attributeVariations: [
+      {
+        color: 'Red',
+        size: 'Small'
+      },
+      {
+        color: 'Black',
+        size: 'Medium'
+      },
+      {
+        color: 'Grey',
+        size: 'Large'
+      }
+    ],
+    dimensions: {
+      length: '23',
+      width: '23',
+      height: '23'
+    },
+    weight: '0.60',
+    opppertunityScore: '4'
   },
   {
     id: 4,
@@ -81,7 +147,29 @@ const dummyProducts = [
     },
     category: "Men's T-Shirts",
     rank: '3',
-    TotalItems: '100'
+    TotalItems: '100',
+    variations: ['B0BSXS7NDG', 'C0VSXS7NDG', 'L0ACVK7NDG', 'P0BSXS7NDG', 'G1VSXS7NDG', 'J0BSXS7NDG'],
+    attributeVariations: [
+      {
+        color: 'Red',
+        size: 'Small'
+      },
+      {
+        color: 'Black',
+        size: 'Medium'
+      },
+      {
+        color: 'Grey',
+        size: 'Large'
+      }
+    ],
+    dimensions: {
+      length: '23',
+      width: '23',
+      height: '23'
+    },
+    weight: '0.60',
+    opppertunityScore: '4'
   },
   {
     id: 5,
@@ -102,7 +190,29 @@ const dummyProducts = [
     },
     category: "Men's T-Shirts",
     rank: '3',
-    TotalItems: '100'
+    TotalItems: '100',
+    variations: ['B0BSXS7NDG', 'C0VSXS7NDG', 'L0ACVK7NDG', 'P0BSXS7NDG', 'G1VSXS7NDG', 'J0BSXS7NDG'],
+    attributeVariations: [
+      {
+        color: 'Red',
+        size: 'Small'
+      },
+      {
+        color: 'Black',
+        size: 'Medium'
+      },
+      {
+        color: 'Grey',
+        size: 'Large'
+      }
+    ],
+    dimensions: {
+      length: '23',
+      width: '23',
+      height: '23'
+    },
+    weight: '0.60',
+    opppertunityScore: '4'
   },
   {
     id: 6,
@@ -123,7 +233,29 @@ const dummyProducts = [
     },
     category: "Men's T-Shirts",
     rank: '3',
-    TotalItems: '100'
+    TotalItems: '100',
+    variations: ['B0BSXS7NDG', 'C0VSXS7NDG', 'L0ACVK7NDG', 'P0BSXS7NDG', 'G1VSXS7NDG', 'J0BSXS7NDG'],
+    attributeVariations: [
+      {
+        color: 'Red',
+        size: 'Small'
+      },
+      {
+        color: 'Black',
+        size: 'Medium'
+      },
+      {
+        color: 'Grey',
+        size: 'Large'
+      }
+    ],
+    dimensions: {
+      length: '23',
+      width: '23',
+      height: '23'
+    },
+    weight: '0.60',
+    opppertunityScore: '4'
   },
   {
     id: 7,
@@ -144,7 +276,29 @@ const dummyProducts = [
     },
     category: "Men's T-Shirts",
     rank: '3',
-    TotalItems: '100'
+    TotalItems: '100',
+    variations: ['B0BSXS7NDG', 'C0VSXS7NDG', 'L0ACVK7NDG', 'P0BSXS7NDG', 'G1VSXS7NDG', 'J0BSXS7NDG'],
+    attributeVariations: [
+      {
+        color: 'Red',
+        size: 'Small'
+      },
+      {
+        color: 'Black',
+        size: 'Medium'
+      },
+      {
+        color: 'Grey',
+        size: 'Large'
+      }
+    ],
+    dimensions: {
+      length: '23',
+      width: '23',
+      height: '23'
+    },
+    weight: '0.60',
+    opppertunityScore: '4'
   },
   {
     id: 8,
@@ -165,7 +319,29 @@ const dummyProducts = [
     },
     category: "Men's T-Shirts",
     rank: '3',
-    TotalItems: '100'
+    TotalItems: '100',
+    variations: ['B0BSXS7NDG', 'C0VSXS7NDG', 'L0ACVK7NDG', 'P0BSXS7NDG', 'G1VSXS7NDG', 'J0BSXS7NDG'],
+    attributeVariations: [
+      {
+        color: 'Red',
+        size: 'Small'
+      },
+      {
+        color: 'Black',
+        size: 'Medium'
+      },
+      {
+        color: 'Grey',
+        size: 'Large'
+      }
+    ],
+    dimensions: {
+      length: '23',
+      width: '23',
+      height: '23'
+    },
+    weight: '0.60',
+    opppertunityScore: '4'
   }
 ]
 

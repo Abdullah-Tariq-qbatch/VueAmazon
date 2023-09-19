@@ -3,55 +3,65 @@ import { ref } from 'vue'
 import axios from 'axios'
 import router from '../router'
 import { isSuccess } from '../utils/helperMethods'
+import { triggerSuccessToast, triggerErrorToast } from '../services/Toast/ToastService'
 
 const api = axios.create({
-  baseURL: 'https://dummyjson.com',
+  baseURL: 'http://192.168.2.46:3000',
   headers: {
     'Content-Type': 'application/json'
   }
 })
 
-export const useAuthStore = defineStore('auth', {
-  state: () => ({
-    token: '',
-    user: {},
-    error: ref(''),
-    message: ref('')
-  }),
+export const useAuthStore = defineStore('auth', () => {
+  const user = ref({})
+  const accessToken = ref(localStorage.getItem('accessToken') || '')
+  const error = ref('')
+  const message = ref('')
+  const loading = ref(false)
 
-  persist: {
-    paths: ['token', 'user']
-  },
+  const login = async (temp_username, password) => {
+    loading.value = true
+    try {
+      const res = await api.post('/user/login', {
+        email: temp_username,
+        password: password
+      })
 
-  actions: {
-    async login(temp_username, password) {
-      try {
-        const res = await api.post('/auth/login', {
-          username: temp_username,
-          password: password
-        })
-
-        if (isSuccess(res)) {
-          const tempUser = res.data
-          this.token = tempUser.token
-          delete tempUser.token
-          this.user = tempUser
-          localStorage.setItem('token', this.token)
-          router.push('/')
-        }
-      } catch (err) {
-        this.error = err.message
+      if (isSuccess(res)) {
+        accessToken.value = res.data.token
+        user.value = res.data.user
+        message.value = res.data.message
+        triggerSuccessToast(message.value)
+        localStorage.setItem('accessToken', accessToken.value)
+        router.push('/')
       }
-    },
-    async logout() {},
-    isAuthenticated() {
-      const localToken = localStorage.getItem('token')
-
-      if (localToken || this.token) {
-        return true
-      }
-
-      return false
+    } catch (err) {
+      error.value = err.message
+      triggerErrorToast("Enter Correct Credentials")
+      console.error(err);
+    } finally {
+      loading.value = false
     }
   }
+
+  const logout = async () => {
+    localStorage.removeItem('accessToken')
+    accessToken.value = ""
+    triggerSuccessToast('Logout Successful')
+    router.push('/login')
+   }
+  
+  const getAccessToken = () => accessToken.value
+
+  const getLocalAccessToken = () => localStorage.getItem('accessToken')
+
+  const isAuthenticated = () => {
+    const localToken = getLocalAccessToken()
+    if (localToken && getAccessToken()) {
+      return true
+    }
+    return false
+  }
+
+  return { user, accessToken, error, message, loading, login, logout, getAccessToken, isAuthenticated };
 })

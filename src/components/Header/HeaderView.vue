@@ -10,7 +10,12 @@
       </div>
       <div class="w-[10%] flex justify-end items-center">
         <img src="@/assets/notifications.svg" />
-        <img src="@/assets/user.png" class="rounded-full ml-[21px]" />
+        <img
+          src="@/assets/user.png"
+          class="rounded-full ml-[21px]"
+          @click="handleUserControlsToggle"
+        />
+        <UserControls v-show="isUserControlsOpen" v-on-click-outside="handleUserControlsClose" />
       </div>
     </div>
   </header>
@@ -18,6 +23,19 @@
 
 <script setup>
 import SearchBarWithFilterView from '../inputs/SearchBarWithFilter/SearchBarWithFilterView.vue'
+import UserControls from '../Dialog/UserControls.vue'
+import { ref } from 'vue'
+import { vOnClickOutside } from '@vueuse/components'
+
+const isUserControlsOpen = ref(false)
+
+const handleUserControlsToggle = () => {
+  isUserControlsOpen.value = !isUserControlsOpen.value
+}
+
+const handleUserControlsClose = () => {
+  isUserControlsOpen.value = false
+}
 </script>
 
 <style></style>
