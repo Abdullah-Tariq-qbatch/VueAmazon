@@ -1,5 +1,6 @@
 <template>
-  <div class="bg-[#F4F4F8] w-full h-full py-[24px] px-[24px]">
+  <LoaderView v-if="productStore.loading" />
+  <div v-else class="bg-[#F4F4F8] w-full h-full py-[24px] px-[24px]">
     <div class="flex items-center">
       <h2 class="text-[#272B41] text-[24px] font-bold w-[10%]">Results</h2>
       <div class="flex w-[90%] justify-end">
@@ -38,7 +39,16 @@
         <ExtendedFilterModal v-show="isFilterDialogOpen" :on-close="handleFilterDialog" />
       </div>
     </div>
-    <ProductsListViewVue :add-to-export="addtoExport" :list="list" />
+
+    <ProductsListViewVue v-if="list.length > 0" :add-to-export="addtoExport" :list="list" />
+    <div v-else class="w-full h-full flex justify-center items-center">
+      <div>
+        <div class="flex justify-center mb-5">
+          <IconWrning />
+        </div>
+        <p class="text-[#272B41] text-[24px] font-bold">Sorry, Your Search has yielded No Result</p>
+      </div>
+    </div>
   </div>
 </template>
 
@@ -51,6 +61,8 @@ import ExtendedFilterModal from '../components/Dialog/ExtendedFilterDialog.vue'
 import { useProductsStore } from '../stores/productsStore'
 import { ref, watchEffect } from 'vue'
 import { useRoute } from 'vue-router'
+import LoaderView from '../components/Loader/LoaderView.vue'
+import IconWrning from '../components/icons/IconWrning.vue'
 const route = useRoute()
 
 const isFilterDialogOpen = ref(false)

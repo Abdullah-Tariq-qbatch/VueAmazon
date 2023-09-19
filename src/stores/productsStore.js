@@ -23,7 +23,7 @@ export const useProductsStore = defineStore('products', () => {
 
   const fetchProducts = async (queryParams = {}) => {
     loading.value = true
-    filters.value = {} 
+    filters.value = {...queryParams} 
 
     parseAndSetFilter(queryParams, 'priceRange', ['min', 'max'])
     parseAndSetFilter(queryParams, 'numberOfReviews', ['min', 'max'])
@@ -31,7 +31,7 @@ export const useProductsStore = defineStore('products', () => {
     parseAndSetFilter(queryParams, 'dimensions', ['length', 'width', 'height'])
 
     try {
-      const res = await api.get('/products?pageNo=1&perPage=8', { params: queryParams })
+      const res = await api.get('/products?perPage=8', { params: queryParams })
       if (isSuccess(res)) {
         products.value = res.data.allProducts
         loading.value = false
@@ -83,5 +83,5 @@ console.log(value);
     router.push({ path: '/products' })
   }
 
-  return { products, error, filters, applyFilter, fetchProducts, setFilterValue, clearFilter }
+  return { products, error, filters,loading, applyFilter, fetchProducts, setFilterValue, clearFilter }
 })
