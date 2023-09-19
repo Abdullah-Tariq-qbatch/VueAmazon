@@ -6,14 +6,14 @@ import { isSuccess } from '../utils/helperMethods'
 import { triggerSuccessToast, triggerErrorToast } from '../services/Toast/ToastService'
 
 const api = axios.create({
-  baseURL: 'http://192.168.2.46:3000',
+  baseURL: import.meta.env.VITE_API_BASE_URL,
   headers: {
     'Content-Type': 'application/json'
   }
 })
 
 export const useAuthStore = defineStore('auth', () => {
-  const user = ref({})
+  const user = ref(JSON.parse(localStorage.getItem('user')) || {})
   const accessToken = ref(localStorage.getItem('accessToken') || '')
   const error = ref('')
   const message = ref('')
@@ -33,12 +33,13 @@ export const useAuthStore = defineStore('auth', () => {
         message.value = res.data.message
         triggerSuccessToast(message.value)
         localStorage.setItem('accessToken', accessToken.value)
+        localStorage.setItem('user', JSON.stringify(user.value))
         router.push('/')
       }
     } catch (err) {
       error.value = err.message
-      triggerErrorToast("Enter Correct Credentials")
-      console.error(err);
+      triggerErrorToast(error.value)
+      console.error(error.value);
     } finally {
       loading.value = false
     }
@@ -46,6 +47,7 @@ export const useAuthStore = defineStore('auth', () => {
 
   const logout = async () => {
     localStorage.removeItem('accessToken')
+    localStorage.removeItem('user')
     accessToken.value = ""
     triggerSuccessToast('Logout Successful')
     router.push('/login')

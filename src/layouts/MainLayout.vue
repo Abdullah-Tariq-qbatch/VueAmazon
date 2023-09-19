@@ -12,7 +12,9 @@ const route = useRoute()
     <div class="flex">
       <SidebarView />
       <div class="min-h-screen flex-grow">
-        <RouterView />
+        <Suspense>
+          <RouterView />
+        </Suspense>
         <FooterView />
       </div>
     </div>

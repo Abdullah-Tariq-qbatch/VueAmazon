@@ -19,6 +19,7 @@
       type="search"
       name=""
       id=""
+      v-model="searchValue"
       placeholder="Search Products, Keywords, or ASINs"
       class="w-96 pl-4 text-sm outline-none focus:outline-none bg-transparent"
     />
@@ -35,10 +36,13 @@
 </template>
 
 <script setup>
-import { ref } from 'vue'
+import { ref, watch } from 'vue'
 import FilterModal from '../../Dialog/FilterModal.vue'
 import { vOnClickOutside } from '@vueuse/components'
+import { useProductsStore } from '../../../stores/productsStore'
+import _ from 'lodash'
 
+const productStore = useProductsStore()
 const isFilterModalOpen = ref(false)
 
 const filterValue = ref('All')
@@ -54,6 +58,16 @@ function setFilterModalToggle() {
 function setFilterModalCLose() {
   isFilterModalOpen.value = false
 }
+const searchValue = ref('')
+watch(
+  searchValue,
+  _.debounce(() => {
+    productStore.setFilterValue('search', searchValue)
+    productStore.applyFilter()
+  }, 800)
+)
+
+//search
 </script>
 
 <style></style>

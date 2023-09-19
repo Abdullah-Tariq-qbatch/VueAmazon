@@ -5,16 +5,22 @@
       type="text"
       :class="`w-[97px] h-[36px] pl-[16px] text-[14px] border border-[#E9E9EA] rounded-[5px] ${InputOneStyles}`"
       :placeholder="`${placeholderOne}`"
+      :value="valueOne"
+      @change="(e) => onChangeOne(e.target.value)"
     />
     <input
       type="text"
       :class="`w-[97px] h-[36px] pl-[16px] text-[14px] border border-[#E9E9EA] rounded-[5px] ${InputTwoStyles}`"
       :placeholder="`${placeholderTwo}`"
+      :value="valueTwo"
+      @change="(e) => onChangeTwo(e.target.value)"
     />
     <input
       type="text"
       :class="`w-[97px] h-[36px] pl-[16px] text-[14px] border border-[#E9E9EA] rounded-[5px] ${InputThreeStyles}`"
       :placeholder="`${placeholderThree}`"
+      :value="valueThree"
+      @change="(e) => onChangeThree(e.target.value)"
     />
   </div>
 </template>
@@ -28,7 +34,19 @@ const props = defineProps({
   headingStyles: String,
   InputOneStyles: String,
   InputTwoStyles: String,
-  InputThreeStyles: String
+  InputThreeStyles: String,
+  onChangeOne: {
+    type: Function
+  },
+  onChangeTwo: {
+    type: Function
+  },
+  onChangeThree: {
+    type: Function
+  },
+  valueOne: String,
+  valueTwo: String,
+  valueThree: String
 })
 </script>
 
