@@ -75,12 +75,14 @@ const password = ref('')
 const emailError = ref(false)
 const passwordError = ref(false)
 
-const submit = () => {
+const submit = async () => {
   if (email.value === '') emailError.value = true
   else emailError.value = false
   if (password.value === '') passwordError.value = true
   else passwordError.value = false
-  if (!emailError.value && !passwordError.value) authStore.login(email.value, password.value)
+  if (!emailError.value && !passwordError.value) await authStore.login(email.value, password.value)
+  email.value = ''
+  password.value = ''
 }
 </script>
 
