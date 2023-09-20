@@ -21,7 +21,7 @@
           <router-link
             :to="`/products/${product?.id}`"
             class="text-[#031625] h-full text-[14px] font-[500] hover:text-[#27C498]"
-            ><div class="h-20 max-h-20 overflow-hidden overflow-ellipsis">
+            ><div class="line-clamp-2">
               {{ product.title }}
             </div></router-link
           >
@@ -48,11 +48,13 @@
           <span v-if="product.category_bsr < 100" class="text-[#27C498] font-[600]">(Top 100)</span>
         </p>
         <div class="flex justify-center">
-          <ButtonView role="secondary" styles="w-full">View More Details</ButtonView>
+          <ButtonView role="secondary" styles="w-full" :on-click="() => viewPageDetail(product.id)"
+            >View More Details</ButtonView
+          >
         </div>
         <ProductRatingCard
           v-if="isRatingCardOpen"
-          :rating="product.rating"
+          :rating="product.reviews || zeroRating"
           v-on-click-outside="handleRatingCardClose"
         />
       </div>
@@ -72,6 +74,7 @@ import IconRatingDropDown from '../icons/IconRatingDropDown.vue'
 import ProductRatingCard from './ProductRatingCard.vue'
 import IconProductPicture from '../icons/IconProductPicture.vue'
 
+import router from '../../router'
 import { numberWithCommas } from '../../utils/helperMethods'
 
 const prop = defineProps({
@@ -93,5 +96,21 @@ const handleRatingCardClose = () => {
 
 const setIsExport = (val) => {
   prop.addToExport(prop.product, val)
+}
+
+const viewPageDetail = (id) => {
+  router.push(`/products/${id}`)
+}
+
+const zeroRating = {
+  accumulative: 0,
+  total: 0,
+  ratingPercentages: {
+    5: 0,
+    4: 0,
+    3: 0,
+    2: 0,
+    1: 0
+  }
 }
 </script>

@@ -44,13 +44,14 @@ import dummyProducts from '../utils/dummyData/dummyProducts'
 const props = defineProps({
   id: String
 })
+//props.id
+const fetchProduct = dummyProducts.filter((product) => product.id === parseInt(1))
+console.log(fetchProduct)
 
 const product = ref(fetchProduct[0])
 
-const fetchProduct = dummyProducts.filter((product) => product.id === parseInt(props.id))
-
 const handleBackClick = () => {
-  router.go(-1)
+  router.push('/products')
 }
 </script>
 

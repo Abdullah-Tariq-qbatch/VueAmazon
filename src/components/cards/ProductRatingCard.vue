@@ -14,7 +14,7 @@
       </p>
 
       <RatingPercentageView
-        v-for="(value, key) in Object.keys(rating.ratingPercentages).reverse()"
+        v-for="(value, key) in Object.keys(rating?.ratingPercentages).reverse()"
         :key="key"
         :star="value"
         :percentage="rating.ratingPercentages[value]"

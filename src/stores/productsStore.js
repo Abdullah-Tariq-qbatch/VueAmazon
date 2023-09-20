@@ -1,6 +1,6 @@
 import { defineStore } from 'pinia'
 import { ref } from 'vue'
-import api from '../services/Toast/APIService'
+import api from '../services/APIService'
 import { isSuccess } from '../utils/helperMethods'
 import router from '../router'
 
@@ -53,6 +53,7 @@ export const useProductsStore = defineStore('products', () => {
 
   const applyFilter = async () => {
     const params = { ...filters.value }
+    console.log(params);
 
     for (const filterName in params) {
       const filterObj = params[filterName]
@@ -67,6 +68,7 @@ export const useProductsStore = defineStore('products', () => {
         delete params[filterName]
       }
     }
+    console.log(params);
     router.push({ path: '/products', query: params })
   }
 
@@ -80,8 +82,13 @@ export const useProductsStore = defineStore('products', () => {
   }
 
   const clearFilter = () => {
+    let pageNo = 0;
+    if (filters.value.pageNo) pageNo = filters.value.pageNo
+  
     filters.value = {}
-    router.push({ path: '/products' })
+    if (pageNo > 0) filters.value.pageNo = pageNo
+    
+    router.push({ path: '/products', query: filters.value })
   }
 
   return {

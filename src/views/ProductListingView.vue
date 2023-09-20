@@ -36,7 +36,11 @@
           ><IconExportVue /><span class="ml-2">Export</span></ButtonView
         >
 
-        <ExtendedFilterModal v-show="isFilterDialogOpen" :on-close="handleFilterDialog" />
+        <ExtendedFilterModal
+          v-show="isFilterDialogOpen"
+          :on-close="handleFilterDialogClose"
+          :on-close-apply="handleFilterDialog"
+        />
       </div>
     </div>
 
@@ -81,18 +85,11 @@ const displayExportButton = ref(false)
 let exportedItems = []
 
 watchEffect(async () => {
+  console.log(route.fullPath)
   await productStore.fetchProducts(route.query)
   if (route.query.pageNo) {
     const pageNo = parseInt(route.query.pageNo || 1)
-    console.log(pageNo)
-    console.log(productStore.totalPagesCount)
-
-    console.log(pageNo <= 0)
-    console.log(pageNo > productStore.totalPagesCount)
-    console.log(pageNo <= 0 || pageNo > productStore.totalPagesCount)
-
     if (pageNo <= 0 || pageNo > productStore.totalPagesCount) {
-      console.log('hello')
       return
     } else {
       list.value = productStore.products
@@ -114,6 +111,11 @@ function showClearFilter() {
 
 const handleFilterDialog = () => {
   isFilterDialogOpen.value = !isFilterDialogOpen.value
+}
+
+const handleFilterDialogClose = () => {
+  isFilterDialogOpen.value = false
+  productStore.clearFilter()
 }
 
 const addtoExport = (product, checked) => {

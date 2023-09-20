@@ -136,7 +136,7 @@
           :on-click="
             () => {
               productStore.applyFilter()
-              onClose()
+              onCloseApply()
             }
           "
           >Apply</ButtonView
@@ -159,6 +159,9 @@ import { useProductsStore } from '../../stores/productsStore'
 
 const props = defineProps({
   onClose: {
+    type: Function
+  },
+  onCloseApply: {
     type: Function
   }
 })
