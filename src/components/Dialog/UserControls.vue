@@ -15,8 +15,9 @@
 </template>
 
 <script setup>
-import { useAuthStore } from '../../stores/authStore'
 import ButtonView from '../inputs/Button/ButtonView.vue'
+
+import { useAuthStore } from '../../stores/authStore'
 
 const authStore = useAuthStore()
 </script>

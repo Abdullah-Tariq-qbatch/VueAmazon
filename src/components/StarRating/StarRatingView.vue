@@ -10,6 +10,7 @@
 </template>
 <script setup>
 import { defineProps } from 'vue'
+
 const { total, earned } = defineProps({
   total: { type: Number, default: 5 },
   earned: { type: Number, default: 4 }

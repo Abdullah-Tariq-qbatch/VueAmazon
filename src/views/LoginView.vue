@@ -63,15 +63,18 @@
 </template>
 
 <script setup>
-import ButtonView from '../components/inputs/Button/ButtonView.vue'
-import IconSpinner from '../components/icons/IconSpinner.vue'
 import { ref } from 'vue'
+
+import ButtonView from '../components/inputs/Button/ButtonView.vue'
+
+import IconSpinner from '../components/icons/IconSpinner.vue'
+
 import { useAuthStore } from '../stores/authStore'
 
 const authStore = useAuthStore()
+
 const email = ref('')
 const password = ref('')
-
 const emailError = ref(false)
 const passwordError = ref(false)
 

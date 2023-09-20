@@ -22,10 +22,11 @@
 </template>
 
 <script setup>
-import SearchBarWithFilterView from '../inputs/SearchBarWithFilter/SearchBarWithFilterView.vue'
-import UserControls from '../Dialog/UserControls.vue'
 import { ref } from 'vue'
 import { vOnClickOutside } from '@vueuse/components'
+
+import SearchBarWithFilterView from '../inputs/SearchBarWithFilter/SearchBarWithFilterView.vue'
+import UserControls from '../Dialog/UserControls.vue'
 
 const isUserControlsOpen = ref(false)
 

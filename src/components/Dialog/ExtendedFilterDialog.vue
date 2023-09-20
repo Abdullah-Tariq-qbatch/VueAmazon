@@ -148,28 +148,22 @@
 
 <script setup>
 import { Slider } from 'ant-design-vue'
+
 import CheckBoxView from '../inputs/CheckBox/CheckBoxView.vue'
 import ButtonView from '../inputs/Button/ButtonView.vue'
 import TwoTextFieldGroupView from '../inputs/TextFieldGroup/TwoTextFieldGroupView.vue'
 import ThreeTextFieldGroupView from '../inputs/TextFieldGroup/ThreeTextFieldGroupView.vue'
 import SelectView from '../inputs/Select/SelectView.vue'
+
 import { useProductsStore } from '../../stores/productsStore'
 
-const trackBackgroundColor = '#27C498'
 const props = defineProps({
   onClose: {
     type: Function
   }
 })
 
+const trackBackgroundColor = '#27C498'
+
 const productStore = useProductsStore()
 </script>
-
-<style scoped>
-select {
-  background-image: url('../../assets/dropDown.svg');
-  background-position: right 16px top 50%;
-  background-repeat: no-repeat;
-  background-size: 6%;
-}
-</style>

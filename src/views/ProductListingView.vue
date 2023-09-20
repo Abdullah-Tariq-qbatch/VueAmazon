@@ -25,7 +25,7 @@
         <ButtonView
           role="secondary"
           styles="ml-[16px] w-[150px] h-[40px] flex items-center"
-          v-show="Object.keys(route.query).length"
+          v-show="showClearFilter()"
           :on-click="productStore.clearFilter"
           ><IconFilterVue /><span class="ml-2">Clear Filters</span></ButtonView
         >
@@ -40,7 +40,10 @@
       </div>
     </div>
 
-    <ProductsListViewVue v-if="list.length > 0" :add-to-export="addtoExport" :list="list" />
+    <div v-if="list.length > 0">
+      <ProductsListViewVue :add-to-export="addtoExport" :list="list" />
+      <PaginationView />
+    </div>
     <div v-else class="w-full h-full flex justify-center items-center">
       <div>
         <div class="flex justify-center mb-5">
@@ -53,32 +56,65 @@
 </template>
 
 <script setup>
-import ButtonView from '../components/inputs/Button/ButtonView.vue'
-import IconFilterVue from '../components/icons/IconFilter.vue'
-import IconExportVue from '../components/icons/IconExport.vue'
-import ProductsListViewVue from '../components/ProductsList/ProductsListView.vue'
-import ExtendedFilterModal from '../components/Dialog/ExtendedFilterDialog.vue'
-import { useProductsStore } from '../stores/productsStore'
 import { ref, watchEffect } from 'vue'
 import { useRoute } from 'vue-router'
-import LoaderView from '../components/Loader/LoaderView.vue'
-import IconWrning from '../components/icons/IconWrning.vue'
-const route = useRoute()
 
-const isFilterDialogOpen = ref(false)
+import ButtonView from '../components/inputs/Button/ButtonView.vue'
+import ProductsListViewVue from '../components/ProductsList/ProductsListView.vue'
+import ExtendedFilterModal from '../components/Dialog/ExtendedFilterDialog.vue'
+import LoaderView from '../components/Loader/LoaderView.vue'
+import PaginationView from '../components/pagination/PaginationView.vue'
+
+import IconWrning from '../components/icons/IconWrning.vue'
+import IconFilterVue from '../components/icons/IconFilter.vue'
+import IconExportVue from '../components/icons/IconExport.vue'
+
+import { useProductsStore } from '../stores/productsStore'
+
+const route = useRoute()
 const productStore = useProductsStore()
 
+const isFilterDialogOpen = ref(false)
 const list = ref([])
+const displayExportButton = ref(false)
 
-watchEffect(async () => (list.value = await productStore.fetchProducts(route.query)))
+let exportedItems = []
+
+watchEffect(async () => {
+  await productStore.fetchProducts(route.query)
+  if (route.query.pageNo) {
+    const pageNo = parseInt(route.query.pageNo || 1)
+    console.log(pageNo)
+    console.log(productStore.totalPagesCount)
+
+    console.log(pageNo <= 0)
+    console.log(pageNo > productStore.totalPagesCount)
+    console.log(pageNo <= 0 || pageNo > productStore.totalPagesCount)
+
+    if (pageNo <= 0 || pageNo > productStore.totalPagesCount) {
+      console.log('hello')
+      return
+    } else {
+      list.value = productStore.products
+    }
+  } else {
+    list.value = productStore.products
+  }
+})
+
+function showClearFilter() {
+  let a = { ...productStore.filters }
+
+  if (a.pageNo) {
+    delete a.pageNo
+  }
+
+  return Object.keys(a).length
+}
 
 const handleFilterDialog = () => {
   isFilterDialogOpen.value = !isFilterDialogOpen.value
 }
-
-const displayExportButton = ref(false)
-
-let exportedItems = []
 
 const addtoExport = (product, checked) => {
   checked

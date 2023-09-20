@@ -6,6 +6,9 @@ import router from '../router'
 
 export const useProductsStore = defineStore('products', () => {
   const products = ref([])
+  const relatedBrands = ref([])
+  const relatedCategories = ref([])
+  const totalPagesCount = ref(0)
   const error = ref('')
   const loading = ref(false)
   const filters = ref({})
@@ -23,7 +26,7 @@ export const useProductsStore = defineStore('products', () => {
 
   const fetchProducts = async (queryParams = {}) => {
     loading.value = true
-    filters.value = {...queryParams} 
+    filters.value = { ...queryParams }
 
     parseAndSetFilter(queryParams, 'priceRange', ['min', 'max'])
     parseAndSetFilter(queryParams, 'numberOfReviews', ['min', 'max'])
@@ -34,6 +37,9 @@ export const useProductsStore = defineStore('products', () => {
       const res = await api.get('/products?perPage=8', { params: queryParams })
       if (isSuccess(res)) {
         products.value = res.data.allProducts
+        relatedBrands.value = res.data.relatedBrands
+        relatedCategories.value = res.data.relatedCategories
+        totalPagesCount.value = res.data.totalCount
         loading.value = false
         return products.value
       }
@@ -46,36 +52,31 @@ export const useProductsStore = defineStore('products', () => {
   }
 
   const applyFilter = async () => {
-    console.log('Hi apply');
     const params = { ...filters.value }
-  
+
     for (const filterName in params) {
       const filterObj = params[filterName]
-  
+
       if (filterObj) {
         if (typeof filterObj === 'object') {
           params[filterName] = Object.values(filterObj).join(', ')
-          console.log(params[filterName]);
           if (params[filterName] === ', ') delete params[filterName]
-        } 
-       
+        }
       }
       if (params[filterName]?.length === 0) {
-       delete params[filterName]
+        delete params[filterName]
       }
     }
-  console.log(params);
     router.push({ path: '/products', query: params })
   }
 
   const setFilterValue = (field, value, index = null) => {
-console.log(value);
-      if (index) {
-        filters.value[field] = filters.value[field] || {}
-        filters.value[field][index] = value
-      } else {
-        filters.value[field] = value
-      }
+    if (index) {
+      filters.value[field] = filters.value[field] || {}
+      filters.value[field][index] = value
+    } else {
+      filters.value[field] = value
+    }
   }
 
   const clearFilter = () => {
@@ -83,5 +84,17 @@ console.log(value);
     router.push({ path: '/products' })
   }
 
-  return { products, error, filters,loading, applyFilter, fetchProducts, setFilterValue, clearFilter }
+  return {
+    products,
+    relatedBrands,
+    relatedCategories,
+    totalPagesCount,
+    error,
+    filters,
+    loading,
+    applyFilter,
+    fetchProducts,
+    setFilterValue,
+    clearFilter
+  }
 })

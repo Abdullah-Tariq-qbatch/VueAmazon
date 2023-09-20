@@ -12,9 +12,7 @@
       <br />
       <router-link
         to="/products"
-        :class="`text-[14px]  ${
-          $route.name === 'products' ? 'text-[#27C498]' : 'text-[#ADB4D2]'
-        }`"
+        :class="`text-[14px]  ${$route.name === 'products' ? 'text-[#27C498]' : 'text-[#ADB4D2]'}`"
       >
         <div class="flex items-center">
           <IconProductListingVue /> <span class="ml-[12px]">Product Listings</span>
@@ -26,6 +24,7 @@
 
 <script setup>
 import { RouterLink } from 'vue-router'
+
 import IconDashboardVue from '../icons/IconDashboard.vue'
 import IconProductListingVue from '../icons/IconProductListing.vue'
 </script>

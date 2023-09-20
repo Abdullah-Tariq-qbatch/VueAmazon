@@ -26,7 +26,7 @@
           in {{ product.category }}
           <span class="text-[#27C498] font-[600]">(Top {{ product.TotalItems }})</span>
         </p>
-        <ProductCardRating
+        <ProductRatingCard
           v-if="isRatingCardOpen"
           :rating="product.rating"
           v-on-click-outside="handleRatingCardClose"
@@ -38,11 +38,15 @@
 
 <script setup>
 import { ref } from 'vue'
-import ProductCardRating from './ProductCardRating.vue'
-import { numberWithCommas } from '../../utils/helperMethods'
-import StarRating from '../StarRating/StarRatingView.vue'
-import IconRatingDropDown from '../icons/IconRatingDropDown.vue'
 import { vOnClickOutside } from '@vueuse/components'
+
+import ProductRatingCard from './ProductRatingCard.vue'
+import StarRating from '../StarRating/StarRatingView.vue'
+
+import IconRatingDropDown from '../icons/IconRatingDropDown.vue'
+
+import { numberWithCommas } from '../../utils/helperMethods'
+
 const prop = defineProps({
   product: Object
 })
@@ -57,5 +61,3 @@ const handleRatingCardClose = () => {
   isRatingCardOpen.value = false
 }
 </script>
-
-<style></style>

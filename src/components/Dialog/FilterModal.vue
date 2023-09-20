@@ -107,10 +107,12 @@
 </template>
 
 <script setup>
-import filters from '../../utils/constants/FilterData'
-import ButtonView from '../inputs/Button/ButtonView.vue'
-import { OnClickOutside } from '@vueuse/components'
 import { ref } from 'vue'
+import { OnClickOutside } from '@vueuse/components'
+
+import ButtonView from '../inputs/Button/ButtonView.vue'
+
+import filters from '../../utils/constants/FilterData'
 
 const props = defineProps({
   value: String,
@@ -133,9 +135,3 @@ const applyClick = () => {
   props.onClose()
 }
 </script>
-
-<style scoped>
-/* input[type='radio'] {
-  accent-color: #27c498;
-} */
-</style>

@@ -17,6 +17,7 @@
 
 <script setup>
 import ProductCard from '../cards/ProductCard.vue'
+
 const props = defineProps({
   addToExport: {
     type: Function

@@ -107,6 +107,7 @@
 
 <script setup>
 import { ref } from 'vue'
+
 const prop = defineProps({
   product: Object
 })
@@ -115,5 +116,3 @@ const activeTab = ref('Price History')
 
 const handleTabChange = (tab) => (activeTab.value = tab)
 </script>
-
-<style></style>

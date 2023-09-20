@@ -35,5 +35,3 @@ const prop = defineProps({
   rating: Object
 })
 </script>
-
-<style></style>

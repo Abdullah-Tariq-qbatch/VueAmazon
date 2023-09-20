@@ -37,10 +37,12 @@
 
 <script setup>
 import { ref, watch } from 'vue'
-import FilterModal from '../../Dialog/FilterModal.vue'
 import { vOnClickOutside } from '@vueuse/components'
-import { useProductsStore } from '../../../stores/productsStore'
 import _ from 'lodash'
+
+import FilterModal from '../../Dialog/FilterModal.vue'
+
+import { useProductsStore } from '../../../stores/productsStore'
 
 const productStore = useProductsStore()
 const isFilterModalOpen = ref(false)

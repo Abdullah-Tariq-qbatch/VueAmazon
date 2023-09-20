@@ -50,7 +50,7 @@
         <div class="flex justify-center">
           <ButtonView role="secondary" styles="w-full">View More Details</ButtonView>
         </div>
-        <ProductCardRating
+        <ProductRatingCard
           v-if="isRatingCardOpen"
           :rating="product.rating"
           v-on-click-outside="handleRatingCardClose"
@@ -61,15 +61,18 @@
 </template>
 
 <script setup>
+import { ref } from 'vue'
+import { vOnClickOutside } from '@vueuse/components'
+
 import StarRating from '../StarRating/StarRatingView.vue'
 import ButtonView from '../inputs/Button/ButtonView.vue'
 import CheckBoxView from '../inputs/CheckBox/CheckBoxView.vue'
-import { numberWithCommas } from '../../utils/helperMethods'
+
 import IconRatingDropDown from '../icons/IconRatingDropDown.vue'
-import ProductCardRating from './ProductCardRating.vue'
+import ProductRatingCard from './ProductRatingCard.vue'
 import IconProductPicture from '../icons/IconProductPicture.vue'
-import { vOnClickOutside } from '@vueuse/components'
-import { ref } from 'vue'
+
+import { numberWithCommas } from '../../utils/helperMethods'
 
 const prop = defineProps({
   product: Object,
@@ -92,5 +95,3 @@ const setIsExport = (val) => {
   prop.addToExport(prop.product, val)
 }
 </script>
-
-<style scoped></style>

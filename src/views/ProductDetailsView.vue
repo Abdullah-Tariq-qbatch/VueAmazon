@@ -18,33 +18,36 @@
       </div>
     </div>
     <div class="flex justify-between h-full py-[24px]">
-      <div class=""><ProductCardDetailVue :product="product" /></div>
+      <div class=""><ProductDetailCard :product="product" /></div>
       <div class="">
-        <ProductAdditionDetailCard :product="product" />
+        <ProductAdditionalDetailCard :product="product" />
       </div>
     </div>
   </div>
 </template>
 
 <script setup>
-import dummyProducts from '../utils/dummyData/dummyProducts'
+import { ref } from 'vue'
+
 import ButtonView from '../components/inputs/Button/ButtonView.vue'
+import ProductDetailCard from '../components/cards/ProductDetailCard.vue'
+import ProductAdditionalDetailCard from '../components/cards/ProductAdditionalDetailCard.vue'
+
 import IconHeart from '../components/icons/IconHeart.vue'
 import IconAmazon from '../components/icons/IconAmazon.vue'
 import IconLocation from '../components/icons/IconLocation.vue'
 import IconBackArrow from '../components/icons/IconBackArrow.vue'
+
 import router from '../router'
-import { ref } from 'vue'
-import ProductCardDetailVue from '../components/cards/ProductCardDetail.vue'
-import ProductAdditionDetailCard from '../components/cards/ProductAdditionDetailCard.vue'
+import dummyProducts from '../utils/dummyData/dummyProducts'
 
 const props = defineProps({
   id: String
 })
 
-const fetchProduct = dummyProducts.filter((product) => product.id === parseInt(props.id))
-
 const product = ref(fetchProduct[0])
+
+const fetchProduct = dummyProducts.filter((product) => product.id === parseInt(props.id))
 
 const handleBackClick = () => {
   router.go(-1)
