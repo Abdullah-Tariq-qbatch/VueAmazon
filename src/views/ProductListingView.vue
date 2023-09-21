@@ -1,6 +1,5 @@
 <template>
-  <LoaderView v-if="productStore.loading" />
-  <div v-else class="bg-[#F4F4F8] w-full h-full py-[24px] px-[24px]">
+  <div class="bg-[#F4F4F8] w-full h-full py-[24px] px-[24px]">
     <div class="flex items-center">
       <h2 class="text-[#272B41] text-[24px] font-bold w-[10%]">Results</h2>
       <div class="flex w-[90%] justify-end">
@@ -43,18 +42,22 @@
         />
       </div>
     </div>
+    <LoaderView v-if="productStore.loading" />
 
-    <div v-if="list.length > 0">
-      <ProductsListViewVue :add-to-export="addtoExport" :list="list" />
-      <PaginationView />
-    </div>
-    <div v-else class="w-full h-full flex justify-center items-center">
+    <div
+      v-else-if="!productStore.loading && !list.length"
+      class="w-full h-full flex justify-center items-center"
+    >
       <div>
         <div class="flex justify-center mb-5">
           <IconWrning />
         </div>
         <p class="text-[#272B41] text-[24px] font-bold">Sorry, Your Search has yielded No Result</p>
       </div>
+    </div>
+    <div v-else>
+      <ProductsListViewVue :add-to-export="addtoExport" :list="list" />
+      <PaginationView />
     </div>
   </div>
 </template>
@@ -75,8 +78,8 @@ import IconExportVue from '../components/icons/IconExport.vue'
 
 import { useProductsStore } from '../stores/productsStore'
 
-const route = useRoute()
 const productStore = useProductsStore()
+const route = useRoute()
 
 const isFilterDialogOpen = ref(false)
 const list = ref([])
@@ -85,26 +88,15 @@ const displayExportButton = ref(false)
 let exportedItems = []
 
 watchEffect(async () => {
-  console.log(route.fullPath)
-  await productStore.fetchProducts(route.query)
-  if (route.query.pageNo) {
-    const pageNo = parseInt(route.query.pageNo || 1)
-    if (pageNo <= 0 || pageNo > productStore.totalPagesCount) {
-      return
-    } else {
-      list.value = productStore.products
-    }
-  } else {
-    list.value = productStore.products
-  }
+  list.value = await productStore.fetchProducts(route.query)
 })
 
 function showClearFilter() {
   let a = { ...productStore.filters }
 
-  if (a.pageNo) {
-    delete a.pageNo
-  }
+  if (a.pageNo) delete a.pageNo
+
+  if (a.search) delete a.search
 
   return Object.keys(a).length
 }

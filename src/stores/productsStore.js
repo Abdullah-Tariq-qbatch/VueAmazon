@@ -4,6 +4,9 @@ import api from '../services/APIService'
 import { isSuccess } from '../utils/helperMethods'
 import router from '../router'
 
+import { useAuthStore } from './authStore'
+
+
 export const useProductsStore = defineStore('products', () => {
   const products = ref([])
   const relatedBrands = ref([])
@@ -12,27 +15,11 @@ export const useProductsStore = defineStore('products', () => {
   const error = ref('')
   const loading = ref(false)
   const filters = ref({})
-
-  const parseAndSetFilter = (queryParams, filterName, filterKeys) => {
-    if (queryParams[filterName]) {
-      const numbers = queryParams[filterName].match(/\d+/g)
-      const numbersAsIntegers = numbers.map(Number)
-      filters.value[filterName] = {}
-      filterKeys.forEach((key, index) => {
-        filters.value[filterName][key] = numbersAsIntegers[index]
-      })
-    }
-  }
+  const product = ref({})
 
   const fetchProducts = async (queryParams = {}) => {
     loading.value = true
-    filters.value = { ...queryParams }
-
-    parseAndSetFilter(queryParams, 'priceRange', ['min', 'max'])
-    parseAndSetFilter(queryParams, 'numberOfReviews', ['min', 'max'])
-    parseAndSetFilter(queryParams, 'weightRange', ['min', 'max'])
-    parseAndSetFilter(queryParams, 'dimensions', ['length', 'width', 'height'])
-
+    filters.value = queryParams
     try {
       const res = await api.get('/products?perPage=8', { params: queryParams })
       if (isSuccess(res)) {
@@ -51,44 +38,48 @@ export const useProductsStore = defineStore('products', () => {
     }
   }
 
-  const applyFilter = async () => {
-    const params = { ...filters.value }
-    console.log(params);
-
-    for (const filterName in params) {
-      const filterObj = params[filterName]
-
-      if (filterObj) {
-        if (typeof filterObj === 'object') {
-          params[filterName] = Object.values(filterObj).join(', ')
-          if (params[filterName] === ', ') delete params[filterName]
-        }
-      }
-      if (params[filterName]?.length === 0) {
-        delete params[filterName]
-      }
-    }
-    console.log(params);
-    router.push({ path: '/products', query: params })
+  const applyFilter = async (filtersParams) => {
+    let search = '';
+    if (filters.value.search) search = filters.value.search
+    filters.value = filtersParams
+    if (search.length > 0) filters.value.search = search
+    router.push({ path: '/products', query: filters.value })
   }
 
-  const setFilterValue = (field, value, index = null) => {
-    if (index) {
-      filters.value[field] = filters.value[field] || {}
-      filters.value[field][index] = value
-    } else {
-      filters.value[field] = value
-    }
+  const setPage = async (pageNumber) => {
+    filters.value['pageNo'] = pageNumber
+    router.push({ path: '/products', query: filters.value })
+  }
+
+  const setSearch = async (keyword) => {
+    filters.value = {}
+    if (keyword.value) filters.value['search'] = keyword.value
+    router.push({ path: '/products', query: filters.value })
   }
 
   const clearFilter = () => {
-    let pageNo = 0;
-    if (filters.value.pageNo) pageNo = filters.value.pageNo
-  
+    let search = '';
+    if (filters.value.search) search = filters.value.search
     filters.value = {}
-    if (pageNo > 0) filters.value.pageNo = pageNo
+    if (search.length > 0) filters.value.search = search
     
     router.push({ path: '/products', query: filters.value })
+  }
+
+  const getProductDetail = async (id) => {
+    const authStore = useAuthStore()
+
+    const user = authStore.getUser()
+    console.log(user);
+
+    const res = await api.get(`/products/details/${id}?userId=${user.id}`)
+    if (isSuccess(res)) {
+      product.value = res.data.productDetails
+      console.log(res);
+      return product.value
+    }
+    console.log(res);
+
   }
 
   return {
@@ -101,7 +92,9 @@ export const useProductsStore = defineStore('products', () => {
     loading,
     applyFilter,
     fetchProducts,
-    setFilterValue,
-    clearFilter
+    clearFilter,
+    setPage,
+    setSearch,
+    getProductDetail
   }
 })

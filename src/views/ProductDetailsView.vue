@@ -27,7 +27,7 @@
 </template>
 
 <script setup>
-import { ref } from 'vue'
+import { ref, watchEffect } from 'vue'
 
 import ButtonView from '../components/inputs/Button/ButtonView.vue'
 import ProductDetailCard from '../components/cards/ProductDetailCard.vue'
@@ -39,16 +39,17 @@ import IconLocation from '../components/icons/IconLocation.vue'
 import IconBackArrow from '../components/icons/IconBackArrow.vue'
 
 import router from '../router'
-import dummyProducts from '../utils/dummyData/dummyProducts'
+import { useProductsStore } from '../stores/productsStore'
 
 const props = defineProps({
   id: String
 })
-//props.id
-const fetchProduct = dummyProducts.filter((product) => product.id === parseInt(1))
-console.log(fetchProduct)
 
-const product = ref(fetchProduct[0])
+const productStore = useProductsStore()
+
+const product = ref({})
+
+watchEffect(async () => (product.value = await productStore.getProductDetail(props.id)))
 
 const handleBackClick = () => {
   router.push('/products')

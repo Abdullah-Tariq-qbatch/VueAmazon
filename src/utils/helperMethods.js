@@ -17,3 +17,18 @@ export function generateRange(start, end) {
   }
   return result;
 }
+
+export const parseParamsStringToObject = (params, filterName, filterKeys) => {
+  console.log(params);
+  if (params[filterName]) {
+    const numbers = params[filterName].match(/\d+/g)
+    const numbersAsIntegers = numbers.map(Number)
+    let res = {}
+    filterKeys.forEach((key, index) => {
+      res[key] = numbersAsIntegers[index]
+    })
+    console.log(res);
+    return res
+  }
+  return undefined
+}

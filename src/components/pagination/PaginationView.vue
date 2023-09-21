@@ -13,11 +13,26 @@ const totalPages = ref(0)
 const pagesToShow = 2
 const displayArray = ref([])
 
-createPages()
+// Create a watcher for route.query.pageNo
+watch(
+  () => route.query.pageNo,
+  (newPageNo) => {
+    // Update the currentPage when route.query.pageNo changes
+    currentPage.value = parseInt(newPageNo, 10) || 1
+    createPages()
+  }
+)
 
-watch(currentPage, () => {
-  createPages()
-})
+watch(
+  () => productStore.totalPagesCount,
+  (newPageNo) => {
+    // Update the currentPage when route.query.pageNo changes
+    totalPages.value = parseInt(newPageNo, 10) || 1
+    createPages()
+  }
+)
+
+createPages()
 
 function createPages() {
   totalPages.value = productStore.totalPagesCount
@@ -35,8 +50,7 @@ function createPages() {
 }
 
 const pageButtonOnClick = (i) => {
-  productStore.setFilterValue('pageNo', i)
-  productStore.applyFilter()
+  productStore.setPage(i)
 }
 </script>
 

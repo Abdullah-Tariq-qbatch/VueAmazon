@@ -57,6 +57,8 @@ export const useAuthStore = defineStore('auth', () => {
 
   const getLocalAccessToken = () => localStorage.getItem('accessToken')
 
+  const getUser  = () => user.value
+
   const isAuthenticated = () => {
     const localToken = getLocalAccessToken()
     if (localToken && getAccessToken()) {
@@ -65,5 +67,5 @@ export const useAuthStore = defineStore('auth', () => {
     return false
   }
 
-  return { user, accessToken, error, message, loading, login, logout, getAccessToken, isAuthenticated };
+  return { user, accessToken, error, message, loading, login, logout, getAccessToken, isAuthenticated, getUser };
 })

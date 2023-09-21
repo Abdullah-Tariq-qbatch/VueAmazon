@@ -24,8 +24,6 @@ const props = defineProps({
   },
   list: Array
 })
-
-console.log(props.list)
 </script>
 
 <style></style>

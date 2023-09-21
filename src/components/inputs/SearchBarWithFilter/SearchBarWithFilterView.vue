@@ -39,12 +39,15 @@
 import { ref, watch } from 'vue'
 import { vOnClickOutside } from '@vueuse/components'
 import _ from 'lodash'
+import { useRoute } from 'vue-router'
 
 import FilterModal from '../../Dialog/FilterModal.vue'
 
 import { useProductsStore } from '../../../stores/productsStore'
 
 const productStore = useProductsStore()
+const route = useRoute()
+
 const isFilterModalOpen = ref(false)
 
 const filterValue = ref('All')
@@ -60,12 +63,12 @@ function setFilterModalToggle() {
 function setFilterModalCLose() {
   isFilterModalOpen.value = false
 }
-const searchValue = ref('')
+const searchValue = ref(route.query.search || '')
+
 watch(
   searchValue,
   _.debounce(() => {
-    productStore.setFilterValue('search', searchValue)
-    productStore.applyFilter()
+    productStore.setSearch(searchValue)
   }, 800)
 )
 
